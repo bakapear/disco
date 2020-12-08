@@ -4,8 +4,7 @@ Enables live CSS editing for Discord
 ![Preview](https://i.imgur.com/V38EtrJ.gif)
 
 ### Setup
-- Run `install.bat` on Windows
-- Run `install.sh` on UNIX-based systems (Linux / Mac).
+- Run `install.bat` on Windows / `install.sh` on UNIX-based systems (Linux / Mac).
 - Restart Discord to apply changes.
 
 ### Usage
