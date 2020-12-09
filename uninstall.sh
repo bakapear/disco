@@ -1,26 +1,26 @@
 #!/bin/bash
 
-for f in $(find $APPDATA/discord -maxdepth 1 -type d | grep "^.*/[0-9]\.[0-9]\.[0-9]*$"); do dir=$f; done
-dir=$dir/modules/discord_desktop_core
+for f in $(find $APPDATA/discord -maxdepth 1 -type d | grep "^.*/[0-9]\.[0-9]\.[0-9]*$"); do dir=$f/modules/discord_desktop_core; done
 
-if [ -d "$dir" ]; then
-  echo "module.exports = require('./core.asar')" >"$dir/index.js"
-  rm -f "$dir/style.css"
-  echo "Uninstalled disco! Restarting Discord..."
-  restart=true
-else
+for f in $(find $LOCALAPPDATA/discord -maxdepth 1 -type d | grep "^.*/app-[0-9]\.[0-9]\.[0-9]*$"); do app=$f/Discord.exe; done
+
+if [ ! -d "$dir" ]; then
   echo "Invalid path: '$dir'"
-  restart=false
+  exit
+elif [ ! -f "$app" ]; then
+  echo "Invalid path: '$app'"
+  exit
+elif [[ $(head -n 1 $dir/index.js) != "/* disco */" ]]; then
+  echo "disco already uninstalled"
+  exit
 fi
 
-if $restart; then
-  for f in $(find $LOCALAPPDATA/discord -maxdepth 1 -type d | grep "^.*/app-[0-9]\.[0-9]\.[0-9]*$"); do dir=$f; done
-  dir=$dir/Discord.exe
+echo "module.exports = require('./core.asar')" >"$dir/index.js"
+rm -f "$dir/style.css"
 
-  if [ -f "$dir" ]; then
-    taskkill //f //im Discord.exe >/dev/null 2>&1
-    $dir </dev/null &>/dev/null &
-  else
-    echo "Invalid path: '$dir'"
-  fi
-fi
+echo "-- disco successfully uninstalled! --"
+echo "Restarting Discord..."
+
+taskkill //f //im Discord.exe >/dev/null 2>&1
+$dir </dev/null &>/dev/null &
+exit
