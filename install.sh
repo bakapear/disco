@@ -11,7 +11,7 @@ elif [ ! -f "$app" ]; then
   echo "Invalid path: '$app'"
   exit
 elif [[ $(head -n 1 $dir/index.js) == "/* disco */" ]]; then
-  echo "disco already installed"
+  echo "disco is already installed."
   exit
 fi
 
