@@ -1,3 +1,5 @@
+/* disco */
+
 let electron = require('electron')
 
 if (typeof window !== 'undefined') {
