@@ -1,12 +1,15 @@
 /* disco */
-
-let electron = require('electron')
-
 if (typeof window !== 'undefined') {
   require(process.argv.pop())
   try {
-    let path = require('path')
     let fs = require('fs')
+    let path = require('path')
+    
+    let css = path.join(__dirname, 'style.css')
+
+    window.addEventListener('DOMContentLoaded', () => {
+      liveCSS(css)
+    })
 
     function liveCSS (file) {
       let pause = false
@@ -28,10 +31,9 @@ if (typeof window !== 'undefined') {
       }
       update()
     }
-
-    window.addEventListener('DOMContentLoaded', () => liveCSS(path.join(__dirname, 'style.css')))
   } catch (e) { console.error(e) }
 } else {
+  let electron = require('electron')
   class BrowserWindow extends electron.BrowserWindow {
     constructor (opts) {
       if (opts.webPreferences.preload) {
