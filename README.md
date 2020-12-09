@@ -14,4 +14,4 @@ Enables live CSS editing for Discord
 
 <br><br>
 #### bash oneliners
-`curl -sL git.io/disco-install | bash -`<br>`curl -sL git.io/disco-uninstall | bash -`
+`curl -sL git.io/disco-install | bash`<br>`curl -sL git.io/disco-uninstall | bash`
