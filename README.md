@@ -8,7 +8,7 @@ Enables live CSS editing for Discord
 - On Linux / Mac: Run `install.sh`
 
 ### Usage
-- Navigate to `%appdata%/discord/<version>/modules/discord_desktop_core`
+- Navigate to `%localappdata%/discord/<version>/modules/discord_desktop_core-1/discord_desktop_core`
 - Add CSS code in `style.css` and see it change live.
 
 
