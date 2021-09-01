@@ -5,11 +5,9 @@ if (typeof window !== 'undefined') {
     let fs = require('fs')
     let path = require('path')
     
-    let css = path.join(__dirname, 'style.css')
+    let css = path.join(process.env.LOCALAPPDATA, 'discord', 'style.css')
 
-    window.addEventListener('DOMContentLoaded', () => {
-      liveCSS(css)
-    })
+    window.addEventListener('DOMContentLoaded', () => liveCSS(css))
 
     function liveCSS (file) {
       let pause = false
