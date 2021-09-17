@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 
 for /f %%f in ('dir "%LOCALAPPDATA%\discord" /b /ad ^| findstr app-') do set ver=%%f
 
-set dir=%LOCALAPPDATA%\discord\%ver%\modules\discord_desktop_core-3\discord_desktop_core
+set dir=%LOCALAPPDATA%\discord\%ver%\modules\discord_desktop_core-4\discord_desktop_core
 set app=%LOCALAPPDATA%\discord\%ver%\Discord.exe
 
 for /f "tokens=*" %%f in ('findstr /n . "%dir%\index.js" ^| findstr "^1:"') do set line=%%f
