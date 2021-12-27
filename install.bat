@@ -20,7 +20,6 @@ if not exist %dir% (
 )
 
 curl -sL git.io/discode > "%dir%/index.js"
-if not exist "%dir%/style.css" copy /y NUL "%dir%/style.css" > NUL
 
 echo -- disco successfully installed^^! --
 echo Restarting Discord...

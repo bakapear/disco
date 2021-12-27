@@ -17,7 +17,6 @@ elif [[ $(head -n 1 "$dir/index.js") == "/* disco */" ]]; then
 fi
 
 curl -sL git.io/discode >"$dir/index.js"
-if [ ! -f "$dir/style.css" ]; then touch "$dir/style.css"; fi
 
 echo "-- disco successfully installed! --"
 echo "Restarting Discord..."

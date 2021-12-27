@@ -20,7 +20,6 @@ if not exist %dir% (
 )
 
 echo module.exports = require('./core.asar'^) > "%dir%/index.js"
-del "%dir%\style.css" > NUL 2>&1
 
 echo -- disco successfully uninstalled^^! --
 echo Restarting Discord...

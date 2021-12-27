@@ -17,7 +17,6 @@ elif [[ $(head -n 1 "$dir/index.js") != "/* disco */" ]]; then
 fi
 
 echo "module.exports = require('./core.asar')" >"$dir/index.js"
-rm -f "$dir/style.css"
 
 echo "-- disco successfully uninstalled! --"
 echo "Restarting Discord..."
