@@ -15,7 +15,7 @@ module.exports = async function () {
 async function loadWebpack () {
   await new Promise(resolve => {
     let check = setInterval(() => {
-      if (window.webpackChunkdiscord_app?.length === 25) {
+      if (window.webpackChunkdiscord_app?.length === 46) {
         clearInterval(check)
         resolve()
       }
