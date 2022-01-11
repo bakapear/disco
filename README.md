@@ -5,7 +5,6 @@ Enables live CSS editing for Discord
 
 ### Setup
 - On Windows: Run `install.bat`
-- On Linux / Mac: Run `install.sh`
 
 ### Usage
 - Navigate to `%localappdata%/Discord`
