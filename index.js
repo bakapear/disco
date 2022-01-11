@@ -1,37 +1,15 @@
 /* disco */
 if (typeof window !== 'undefined') {
   require(process.argv.pop())
-  try {
-    let fs = require('fs')
-    let path = require('path')
-    
-    let css = path.join(process.env.LOCALAPPDATA, 'discord', 'style.css')
 
-    window.addEventListener('DOMContentLoaded', () => liveCSS(css))
+  let fs = require('fs')
+  let ph = require('path')
 
-    function liveCSS (file) {
-      let pause = false
-      fs.watch(file, () => {
-        if (!pause) {
-          setTimeout(pause = true && (() => { pause = false }), 100)
-          update()
-        }
-      })
-      function update () {
-        let tag = Array.from(document.getElementsByTagName('style')).find(x => x.getAttribute('livecss') === file)
-        if (!tag) {
-          tag = document.createElement('style')
-          tag.setAttribute('livecss', file)
-          tag.type = 'text/css'
-          document.head.appendChild(tag)
-        }
-        setTimeout(() => { tag.innerText = fs.readFileSync(file, 'utf-8') }, 10)
-      }
-      update()
-    }
-  } catch (e) { console.error(e) }
+  let main = ph.join(process.env.LOCALAPPDATA, 'discord', 'disco', 'core.js')
+  if (fs.existsSync(main)) { try { require(main) } catch (e) { console.error(e) } }
 } else {
   let electron = require('electron')
+
   class BrowserWindow extends electron.BrowserWindow {
     constructor (opts) {
       if (opts.webPreferences.preload) {
