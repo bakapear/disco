@@ -12,6 +12,6 @@ disco.Dispatcher.subscribe('USER_SETTINGS_UPDATE', e => {
 
 let bg = null
 function setStatus (status) {
-  if (!bg) bg = disco.$(disco.get(450388).bg)
+  if (!bg) bg = disco.$(disco.get(243608).bg)
   bg.style.setProperty('--status', `var(--status-${status})`)
 }
