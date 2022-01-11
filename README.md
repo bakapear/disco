@@ -7,8 +7,9 @@ Enables live CSS editing for Discord
 - On Windows: Run `install.bat`
 
 ### Usage
-- Navigate to `%localappdata%/Discord`
+- Navigate to `%LOCALAPPDATA%/Discord/disco`
 - Add CSS code in `style.css` and see it change live.
+- Additionally you can add JavaScript code in `script.js`.
 
 #### bash oneliners
 `curl -sL git.io/disco-install | bash`<br>`curl -sL git.io/disco-uninstall | bash`

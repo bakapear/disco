@@ -3,13 +3,24 @@ if (typeof window !== 'undefined') {
   require(process.argv.pop())
   try {
     let fs = require('fs')
-    let path = require('path')
-    
-    let css = path.join(process.env.LOCALAPPDATA, 'discord', 'style.css')
+    let ph = require('path')
 
-    window.addEventListener('DOMContentLoaded', () => liveCSS(css))
+    let dir = ph.join(process.env.LOCALAPPDATA, 'discord', 'disco')
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir)
+
+    window.addEventListener('DOMContentLoaded', () => {
+      liveCSS(ph.join(dir, 'style.css'))
+      execScript(ph.join(dir, 'script.js'))
+    })
 
     function liveCSS (file) {
+      if (!fs.existsSync(file)) fs.writeFileSync(file, '')
+
+      let style = document.createElement('style')
+      document.head.append(style)
+
+      let update = () => setTimeout(() => { style.innerText = fs.readFileSync(file, 'utf-8') }, 10)
+
       let pause = false
       fs.watch(file, () => {
         if (!pause) {
@@ -17,21 +28,18 @@ if (typeof window !== 'undefined') {
           update()
         }
       })
-      function update () {
-        let tag = Array.from(document.getElementsByTagName('style')).find(x => x.getAttribute('livecss') === file)
-        if (!tag) {
-          tag = document.createElement('style')
-          tag.setAttribute('livecss', file)
-          tag.type = 'text/css'
-          document.head.appendChild(tag)
-        }
-        setTimeout(() => { tag.innerText = fs.readFileSync(file, 'utf-8') }, 10)
-      }
+
       update()
+    }
+
+    function execScript (file) {
+      if (!fs.existsSync(file)) fs.writeFileSync(file, '')
+      require(file)
     }
   } catch (e) { console.error(e) }
 } else {
   let electron = require('electron')
+
   class BrowserWindow extends electron.BrowserWindow {
     constructor (opts) {
       if (opts.webPreferences.preload) {
