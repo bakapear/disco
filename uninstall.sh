@@ -2,7 +2,7 @@
 
 for f in $(find $LOCALAPPDATA/discord -maxdepth 1 -type d | grep "app-"); do ver=$f; done
 
-dir=$f/modules/discord_desktop_core-1/discord_desktop_core
+dir=$f/modules/discord_desktop_core-2/discord_desktop_core
 app=$f/Discord.exe
 
 if [ ! -d "$dir" ]; then
