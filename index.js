@@ -1,6 +1,7 @@
 /* disco */
 if (typeof window !== 'undefined') {
-  require(process.argv.pop())
+  require(process.env.DISCO_PRELOAD)
+  delete process.env.DISCO_PRELOAD
   try {
     let fs = require('fs')
     let ph = require('path')
@@ -43,7 +44,7 @@ if (typeof window !== 'undefined') {
   class BrowserWindow extends electron.BrowserWindow {
     constructor (opts) {
       if (opts.webPreferences.preload) {
-        opts.webPreferences.additionalArguments.push(opts.webPreferences.preload)
+        process.env.DISCO_PRELOAD = opts.webPreferences.preload
         opts.webPreferences.preload = __filename
       }
       super(opts)
