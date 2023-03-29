@@ -1,24 +1,6 @@
-if (typeof window === 'undefined') {
-  let electron = require('electron')
-
-  class BrowserWindow extends electron.BrowserWindow {
-    constructor (opts) {
-      if (opts.title) {
-        opts.webPreferences.additionalArguments.push(opts.webPreferences.preload)
-        opts.webPreferences.preload = __filename
-      }
-      super(opts)
-    }
-  }
-
-  let ep = require.cache[require.resolve('electron')]
-  delete ep.exports
-  ep.exports = { ...electron, BrowserWindow }
-
-  require('../app.asar')
-} else {
+/* disco */
+if (typeof window !== 'undefined') {
   require(process.argv.pop())
-
   try {
     let fs = require('fs')
     let ph = require('path')
@@ -55,4 +37,22 @@ if (typeof window === 'undefined') {
       require(file)
     }
   } catch (e) { console.error(e) }
+} else {
+  let electron = require('electron')
+
+  class BrowserWindow extends electron.BrowserWindow {
+    constructor (opts) {
+      if (opts.webPreferences.preload) {
+        opts.webPreferences.additionalArguments.push(opts.webPreferences.preload)
+        opts.webPreferences.preload = __filename
+      }
+      super(opts)
+    }
+  }
+
+  let ep = require.cache[require.resolve('electron')]
+  delete ep.exports
+  ep.exports = Object.assign({}, electron, { BrowserWindow })
+
+  module.exports = require('./core.asar')
 }

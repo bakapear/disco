@@ -2,30 +2,25 @@
 
 for f in $(find $LOCALAPPDATA/discord -maxdepth 1 -type d | grep "app-"); do ver=$f; done
 
-dir=$f/resources/app
-app=$f/discord.exe
+dir=$f/modules/discord_desktop_core-2/discord_desktop_core
+app=$f/Discord.exe
 
-disco=$dir/disco.js
-pack=$dir/package.json
-
-if [ ! -f "$disco" ]; then
+if [ ! -d "$dir" ]; then
+  echo "Invalid path: '$dir'"
+  exit
+elif [ ! -f "$app" ]; then
+  echo "Invalid path: '$app'"
+  exit
+elif [[ $(head -n 1 "$dir/index.js") != "/* disco */" ]]; then
   echo "disco is not installed."
   exit
 fi
 
-rm "$disco"
-
-if grep -q "disco.js" "$pack"; then rm "$pack"; fi
-
-rmdir "$dir" > /dev/null
+echo "module.exports = require('./core.asar')" >"$dir/index.js"
 
 echo "-- disco successfully uninstalled! --"
+echo "Restarting Discord..."
 
-if tasklist -fi "ImageName eq discord.exe" -fo csv | grep -i "discord.exe" > /dev/null
-then
-  echo "Restarting Discord..."
-
-  taskkill -f -im discord.exe > /dev/null
-  "$app" </dev/null &>/dev/null &
-  exit
-fi
+taskkill //f //im Discord.exe >/dev/null 2>&1
+"$app" </dev/null &>/dev/null &
+exit

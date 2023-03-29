@@ -1,31 +1,29 @@
 @echo off
+setlocal enabledelayedexpansion
 
 for /f %%f in ('dir "%LOCALAPPDATA%\discord" /b /ad ^| findstr app-') do set ver=%%f
 
-set dir=%LOCALAPPDATA%\discord\%ver%\resources\app
-set app=%LOCALAPPDATA%\discord\%ver%\discord.exe
+set dir=%LOCALAPPDATA%\discord\%ver%\modules\discord_desktop_core-2\discord_desktop_core
+set app=%LOCALAPPDATA%\discord\%ver%\Discord.exe
 
-set disco=%dir%\disco.js
-set pack=%dir%\package.json
+for /f "tokens=*" %%f in ('findstr /n . "%dir%\index.js" ^| findstr "^1:"') do set line=%%f
 
-if not exist "%disco%" (
+if not exist %dir% (
+  echo Invalid path: '%dir%'
+  exit /b
+) else if not exist %app% (
+  echo Invalid path: '%app%'
+  exit /b
+) else if not "!line:~2!" == "/* disco */" (
   echo disco is not installed.
   exit /b
-) 
-
-del "%disco%"
-
->nul find "disco.js" "%pack%" 2> nul && del "%pack%"
-
-rmdir "%dir%" 2> nul
-
-echo -- disco successfully uninstalled^! --
-
-tasklist /fi "ImageName eq discord.exe" /fo csv 2>NUL | find /I "discord.exe">NUL
-if "%ERRORLEVEL%"=="0" (
-  echo Restarting Discord...
-
-  taskkill /f /im Discord.exe > NUL 2>&1
-  explorer "%app%"
-  exit /b
 )
+
+echo module.exports = require('./core.asar'^) > "%dir%/index.js"
+
+echo -- disco successfully uninstalled^^! --
+echo Restarting Discord...
+
+taskkill /f /im Discord.exe > NUL 2>&1
+explorer "%app%"
+exit /b
