@@ -18,7 +18,7 @@ if (typeof window !== 'undefined') {
       if (!fs.existsSync(file)) fs.writeFileSync(file, '')
 
       let style = document.createElement('style')
-      document.head.append(style)
+      document.documentElement.append(style)
 
       let update = () => setTimeout(() => { style.innerText = fs.readFileSync(file, 'utf-8') }, 10)
 
